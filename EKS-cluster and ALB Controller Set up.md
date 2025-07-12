@@ -65,7 +65,6 @@ Step 3: Create IAM Service Account
 ⚠️ Note: Before creating the service account, check the AWS CloudFormation console and delete any existing stacks created by previous ALB add-ons to avoid resource conflicts.
 
 ```bash
-
 eksctl create iamserviceaccount \
   --cluster=eks-cluster \
   --namespace=kube-system \
@@ -76,8 +75,9 @@ eksctl create iamserviceaccount \
   --override-existing-serviceaccounts
 ```
 
-Step 4: Install Helm
-``` bash
+Step 4:Install Helm
+```bash
+
 curl https://baltocdn.com/helm/signing.asc | gpg --dearmor | sudo tee /usr/share/keyrings/helm.gpg > /dev/null
 sudo apt-get install apt-transport-https --yes
 echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/helm.gpg] https://baltocdn.com/helm/stable/debian/ all main" | sudo tee /etc/apt/sources.list.d/helm-stable-debian.list
@@ -90,6 +90,7 @@ Step 5: Add Helm Repo
 helm repo add eks https://aws.github.io/eks-charts
 helm repo update eks
 ```
+
 Step 6: Install ALB Controller (Update VPC ID)
 ```bash
 helm install aws-load-balancer-controller eks/aws-load-balancer-controller \
@@ -99,8 +100,8 @@ helm install aws-load-balancer-controller eks/aws-load-balancer-controller \
   --set serviceAccount.name=aws-load-balancer-controller \
   --set region=us-east-1 \
   --set vpcId=vpc-0d3cb48c85bdfaf04
-
 ```
+
 🔁 Replace vpc-0d3cb48c85bdfaf04 with your actual VPC ID.
 
 Step 7: Verify Controller Deployment
@@ -112,9 +113,9 @@ You now have a fully functional EKS cluster with the AWS ALB Ingress Controller 
 
 ---
 
-delete eks cluster:
+Delete eks cluster:
 ```bash
-eksctl delete cluster --name demo-cluster --region us-east-1
+eksctl delete cluster --name eks-cluster --region us-east-1
 ```
 
 
