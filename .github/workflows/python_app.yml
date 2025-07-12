@@ -92,8 +92,26 @@ jobs:
         - name: Set up Docker Buildx
           uses: docker/setup-buildx-action@v3
 
-        - name: Build and push
+        - name: Build image (but do NOT push yet)
           uses: docker/build-push-action@v6
           with:
-            push: true
+            push: false
             tags: sowmya205/python-postgres:2
+            outputs: type=docker,dest=/tmp/image.tar
+
+        - name: Load image into Docker
+          run: docker load -i /tmp/image.tar
+
+        - name: Run Trivy vulnerability scanner
+          uses: aquasecurity/trivy-action@master
+          with:
+            image-ref: 'sowmya205/python-postgres:2'
+            format: 'table'
+            exit-code: '1' # fail the build on critical/high vulnerabilities
+            severity: 'CRITICAL,HIGH'
+
+        - name: Push image after successful scan
+          uses: docker/build-push-action@v6
+          with:
+           push: true
+           tags: sowmya205/python-postgres:2
