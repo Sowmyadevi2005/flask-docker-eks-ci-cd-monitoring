@@ -68,5 +68,6 @@ jobs:
       - name: Run Test cases
         continue-on-error: true
         run: |
+          pip install -r requirements.txt
           pip install pytest
-          pytest
+          pytest tests/
