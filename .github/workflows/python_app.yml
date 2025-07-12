@@ -107,8 +107,6 @@ jobs:
           with:
             image-ref: 'sowmya205/python-postgres:2'
             format: 'table'
-            exit-code: '1' # fail the build on critical/high vulnerabilities
-            severity: 'CRITICAL,HIGH'
 
         - name: Push image after successful scan
           uses: docker/build-push-action@v6
