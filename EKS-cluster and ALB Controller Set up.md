@@ -34,6 +34,7 @@ eksctl create nodegroup --cluster=eks-cluster \
                        --node-volume-size=29 \
                        --ssh-access \
                        --ssh-public-key=EC2-Connect-ramya
+```
 Step 4: Update Kubeconfig
 ```bash
 aws eks update-kubeconfig --region us-east-1 --name eks-cluster
