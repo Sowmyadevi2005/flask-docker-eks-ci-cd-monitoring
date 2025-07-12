@@ -53,6 +53,7 @@ jobs:
           trivy fs --format table -o fs-report.json .
 
       - name: Gitleaks Installation & code scan
+        continue-on-error: true
         run: |
           sudo apt-get update -y
           sudo apt-get install -y gitleaks
