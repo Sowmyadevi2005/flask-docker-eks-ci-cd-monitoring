@@ -65,6 +65,9 @@ jobs:
     needs: security_checks
 
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        
       - name: Run Test cases
         continue-on-error: true
         run: |
