@@ -8,15 +8,17 @@ metadata:
   annotations:
     alb.ingress.kubernetes.io/scheme: internet-facing
     alb.ingress.kubernetes.io/target-type: ip
+    alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}]'
+    alb.ingress.kubernetes.io/healthcheck-path: /flask
 spec:
   ingressClassName: alb
   rules:
-  - http:
-      paths:
-      - pathType: Prefix
-        path: "/"
-        backend:
-          service:
-            name: library-frontend
-            port: 
-              number: 5000
+    - http:
+        paths:
+          - path: /flask
+            pathType: Prefix
+            backend:
+              service:
+                name: library-frontend
+                port:
+                  number: 5000
